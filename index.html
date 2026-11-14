@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sprout Capital</title>
+<meta name="description" content="Sprout Capital trades minerals, ores and alloys worldwide from Johannesburg. Chrome, manganese, ferroalloys, copper, PGMs and more. Book a meeting.">
+<link rel="icon" type="image/png" href="media/icon.png">
+<link rel="apple-touch-icon" href="media/icon.png">
+<link rel="canonical" href="https://sproutcapital.co.za/">
+<meta property="og:title" content="Sprout Capital">
+<meta property="og:description" content="Minerals, ores and alloys traded worldwide from Johannesburg. Book a meeting.">
+<meta property="og:image" content="https://sproutcapital.co.za/media/rail.jpg">
+<meta property="og:url" content="https://sproutcapital.co.za/">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a lot sheet printed on paper. Ruled rows, mono labels, lot numbers.
+   Paper pages, forest-green bands taken from the logo, photography doing the heavy lifting.
+   Four routed pages; every one ends at the same door: book a meeting. */
+:root{
+  color-scheme: light;
+  --paper:#f2f0e9;       /* page ground */
+  --card:#fbfaf6;        /* raised paper */
+  --ink:#1c1f22;         /* logo charcoal, text */
+  --forest:#103a24;      /* logo green, dark bands */
+  --leaf:#1f7a4d;        /* accent on paper */
+  --mint:#62d49c;        /* accent on dark */
+  --steel:#6f7472;       /* logo grey, secondary text */
+  --rule:#d4d0c4;        /* ruled lines on paper */
+  --laterite:#b9781f;    /* small data highlights */
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --gutter:clamp(18px,4vw,56px);
+  --max:1240px;
+  --top:72px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,video{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--leaf);outline-offset:3px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.mono{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--steel)}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:.95;margin:0;text-wrap:balance;text-transform:uppercase;letter-spacing:.005em}
+h2{font-size:clamp(40px,6.2vw,84px)}
+h2 em,h1 em{font-style:normal;color:var(--leaf)}
+.dark h2 em,.dark h1 em,.hero h1 em{color:var(--mint)}
+p{margin:0}
+[hidden]{display:none!important}
+
+/* scroll progress */
+#bar{position:fixed;left:0;top:0;height:3px;width:100%;background:var(--leaf);transform:scaleX(0);transform-origin:left;z-index:30}
+
+/* header */
+.top{position:fixed;inset:0 0 auto 0;height:var(--top);z-index:20;background:rgba(242,240,233,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);transition:box-shadow .3s,height .3s var(--ease)}
+.top.stuck{box-shadow:0 8px 30px -18px rgba(16,58,36,.45)}
+.top .wrap{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:block;line-height:0}
+.brand img{height:42px;width:auto;transition:transform .35s var(--ease)}
+.brand:hover img{transform:translateX(3px)}
+.top nav{display:flex;gap:28px;align-items:center}
+.top nav a{text-decoration:none;font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;position:relative;padding:8px 0}
+.top nav a:not(.btn)::after{content:"";position:absolute;left:0;bottom:2px;height:2px;width:100%;background:var(--leaf);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.top nav a:not(.btn):hover::after,.top nav a[aria-current="page"]::after{transform:scaleX(1)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 22px;font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .25s var(--ease)}
+.btn::after{content:"→";transition:transform .25s var(--ease)}
+.btn:hover{transform:translateY(-2px);background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn:hover::after{transform:translateX(5px)}
+.btn.solid{background:var(--forest);border-color:var(--forest);color:#fff}
+.btn.solid:hover{background:var(--leaf);border-color:var(--leaf);color:#fff}
+.dark .btn:hover,.hero .btn:hover{background:#fff;color:var(--forest);border-color:#fff}
+.dark .btn.solid,.hero .btn.solid{background:var(--mint);border-color:var(--mint);color:var(--forest)}
+.dark .btn.solid:hover,.hero .btn.solid:hover{background:#fff;border-color:#fff;color:var(--forest)}
+.top nav a.btn{padding:10px 16px}
+
+/* hero (home) and page heads */
+.hero{position:relative;overflow:hidden;background:var(--forest);color:#fff;margin-top:var(--top)}
+.hero .media{position:absolute;inset:-8% 0;will-change:transform}
+.hero video{width:100%;height:100%;object-fit:cover;filter:saturate(.75) contrast(1.05) brightness(.62)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(10,34,21,.9) 0%,rgba(10,34,21,.55) 48%,rgba(10,34,21,.15) 100%),linear-gradient(0deg,rgba(10,34,21,.7),transparent 40%)}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:clamp(28px,5vw,72px);align-items:end;padding-top:clamp(70px,10vw,140px);padding-bottom:clamp(48px,7vw,96px)}
+.hero.page .wrap{grid-template-columns:minmax(0,1fr);padding-top:clamp(64px,9vw,120px);padding-bottom:clamp(40px,6vw,72px)}
+.hero h1{font-size:clamp(52px,8.6vw,126px);font-weight:900}
+.hero.page h1{font-size:clamp(52px,9vw,132px)}
+.hero .mono{color:#cfe3d7}
+.lede{margin-top:24px;max-width:58ch;font-size:clamp(17px,1.5vw,20px);color:#e4ece7}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+
+/* agenda card */
+.sheet{background:rgba(251,250,246,.96);color:var(--ink);border-top:4px solid var(--mint)}
+.sheet header{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule);font-family:var(--mono);color:var(--steel);letter-spacing:.08em;text-transform:uppercase;font-size:11.5px}
+.sheet h3{font-size:32px;padding:18px 16px 10px}
+.sheet ol{list-style:none;margin:0;padding:0 16px 6px;counter-reset:a}
+.sheet li{counter-increment:a;display:grid;grid-template-columns:34px 1fr;gap:10px;padding:11px 0;border-top:1px dashed var(--rule);font-size:15px;line-height:1.4;transition:transform .25s var(--ease)}
+.sheet li::before{content:counter(a,decimal-leading-zero);font-family:var(--mono);font-size:12px;color:var(--leaf);padding-top:2px}
+.sheet li:hover{transform:translateX(6px)}
+.sheet a{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:#fff;background:var(--forest);transition:background .2s}
+.sheet a::after{content:"→";transition:transform .25s var(--ease)}
+.sheet a:hover{background:var(--leaf)}
+.sheet a:hover::after{transform:translateX(5px)}
+
+/* ticker */
+.ticker{border-bottom:1px solid var(--rule);overflow:hidden;background:var(--card)}
+.ticker div{display:flex;gap:48px;width:max-content;padding:14px 0;animation:slide 60s linear infinite;font-family:var(--display);font-weight:600;font-size:22px;letter-spacing:.08em;text-transform:uppercase;color:var(--steel)}
+.ticker:hover div{animation-play-state:paused}
+.ticker span::after{content:"";display:inline-block;width:9px;height:9px;background:var(--leaf);transform:skewX(-24deg);margin-left:48px;vertical-align:middle}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* facts */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--rule)}
+.facts div{padding:34px var(--gutter) 30px;border-right:1px solid var(--rule);transition:background .3s}
+.facts div:last-child{border-right:0}
+.facts div:hover{background:var(--card)}
+.facts b{display:block;font-family:var(--display);font-weight:900;font-size:clamp(44px,5.4vw,76px);line-height:1;font-variant-numeric:tabular-nums;transition:transform .35s var(--ease),color .3s}
+.facts div:hover b{transform:translateY(-4px);color:var(--leaf)}
+.facts b small{font-size:.42em;font-weight:600;color:var(--laterite);letter-spacing:.06em;margin-left:6px}
+.facts p{margin-top:10px;color:var(--steel);font-size:15px;max-width:26ch}
+
+section{padding:clamp(64px,9vw,120px) 0}
+.head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:clamp(20px,4vw,64px);align-items:end;margin-bottom:clamp(32px,5vw,60px)}
+.head p{color:var(--steel);max-width:52ch}
+.head .mono,.eyebrow{display:block;margin-bottom:14px;color:var(--leaf)}
+.dark{background:var(--forest);color:#fff}
+.dark .head p{color:#cfe3d7}
+.dark .head .mono,.dark .eyebrow,.dark .mono{color:var(--mint)}
+
+/* reveal on scroll: resting state is visible; .pre is applied by script only */
+[data-r]{transition:opacity .8s var(--ease),transform .9s var(--ease)}
+[data-r].pre{opacity:.12;transform:translateY(34px)}
+[data-z]{overflow:hidden}
+[data-z]>img,[data-z]>video{transition:transform 1.4s var(--ease)}
+[data-z].pre>img,[data-z].pre>video{transform:scale(1.22)}
+
+/* journey: pinned horizontal scroll */
+.journey{padding:0;background:var(--ink);color:#fff;position:relative}
+.journey .pin{position:sticky;top:var(--top);height:calc(100svh - var(--top));min-height:520px;overflow:hidden;display:flex;flex-direction:column}
+.journey .jhead{display:flex;justify-content:space-between;align-items:end;gap:20px;padding:clamp(20px,3vw,36px) var(--gutter) clamp(14px,2vw,22px)}
+.journey h2{font-size:clamp(34px,5vw,68px)}
+.journey .jhead p{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:#aeb6b1}
+.track{display:flex;gap:clamp(14px,2vw,26px);padding:0 var(--gutter);flex:1;min-height:0;will-change:transform}
+.stop{position:relative;flex:0 0 min(64vw,820px);overflow:hidden;background:#000}
+.stop img{width:100%;height:100%;object-fit:cover;filter:brightness(.72);transition:transform .9s var(--ease),filter .5s}
+.stop:hover img{transform:scale(1.05);filter:brightness(.85)}
+.stop::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.78),transparent 55%)}
+.stop div{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:clamp(16px,2.4vw,30px)}
+.stop b{font-family:var(--display);font-weight:900;font-size:clamp(70px,11vw,170px);line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--mint);display:block}
+.stop h3{font-size:clamp(30px,3.6vw,52px);margin-top:10px}
+.stop p{max-width:44ch;color:#dfe5e1;margin-top:8px;font-size:16px}
+.jline{height:3px;background:#3a4044;margin:clamp(14px,2vw,22px) var(--gutter)}
+.jline i{display:block;height:100%;background:var(--mint);transform:scaleX(0);transform-origin:left}
+.journey.flat .pin{position:static;height:auto;min-height:0}
+.journey.flat .track{overflow-x:auto;scroll-snap-type:x mandatory;height:62svh;min-height:380px;flex:none}
+.journey.flat .stop{scroll-snap-align:center;flex-basis:84vw}
+.journey.flat .jline{display:none}
+.journey.flat .pin{padding-bottom:26px}
+
+/* doors */
+.doors{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,24px)}
+.door{position:relative;display:block;text-decoration:none;color:#fff;aspect-ratio:4/5;overflow:hidden;background:var(--forest)}
+.door img,.door video{width:100%;height:100%;object-fit:cover;filter:brightness(.62) saturate(.85);transition:transform .9s var(--ease),filter .5s}
+.door:hover img,.door:hover video{transform:scale(1.08);filter:brightness(.5) saturate(.85)}
+.door::after{content:"";position:absolute;left:0;bottom:0;height:5px;width:100%;background:var(--mint);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.door:hover::after{transform:scaleX(1)}
+.door div{position:absolute;inset:auto 0 0 0;padding:22px;transition:transform .45s var(--ease)}
+.door:hover div{transform:translateY(-10px)}
+.door span{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mint)}
+.door h3{font-size:clamp(34px,3.8vw,54px);margin:8px 0}
+.door p{font-size:15px;color:#e4ece7;max-width:30ch}
+
+/* scroll-linked word band */
+.band{overflow:hidden;padding:clamp(18px,3vw,36px) 0;border-block:1px solid var(--rule);background:var(--card)}
+.band div{white-space:nowrap;font-family:var(--display);font-weight:900;font-size:clamp(70px,13vw,200px);line-height:.9;text-transform:uppercase;color:transparent;-webkit-text-stroke:1.5px var(--forest);will-change:transform}
+.band div b{color:var(--forest);-webkit-text-stroke:0;font-weight:900}
+
+/* cta band */
+.close{text-align:left}
+.close .wrap{display:flex;justify-content:space-between;align-items:end;gap:28px;flex-wrap:wrap}
+.close h2{font-size:clamp(48px,8vw,116px);font-weight:900}
+.close p{color:#cfe3d7;margin-top:14px;max-width:46ch}
+
+/* materials: catalogue with sticky photo */
+.split{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(28px,5vw,72px);align-items:start}
+.grp{padding-bottom:44px}
+.grp h3{font-size:14px;font-family:var(--mono);font-weight:500;letter-spacing:.1em;color:var(--steel);padding:0 0 12px;border-bottom:2px solid var(--ink);display:flex;justify-content:space-between}
+.grp h3 span{color:var(--leaf)}
+.grp ul{list-style:none;margin:0;padding:0}
+.grp li{display:grid;grid-template-columns:1fr auto;gap:2px 14px;padding:14px 0 13px 0;border-bottom:1px dashed var(--rule);position:relative;transition:padding-left .28s var(--ease),background .28s}
+.grp li::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--leaf);transform:scaleY(0);transform-origin:top;transition:transform .28s var(--ease)}
+.grp li:hover{padding-left:16px;background:var(--card)}
+.grp li:hover::before{transform:scaleY(1)}
+.grp b{font-family:var(--display);font-weight:800;font-size:clamp(26px,2.9vw,38px);text-transform:uppercase;letter-spacing:.02em;line-height:1.02}
+.grp i{font-style:normal;font-family:var(--mono);font-size:12.5px;color:var(--laterite);letter-spacing:.06em;align-self:center;padding-right:8px}
+.grp small{grid-column:1/-1;color:var(--steel);font-size:15px}
+.viewer{position:sticky;top:calc(var(--top) + 24px);aspect-ratio:4/5;max-height:calc(100svh - var(--top) - 48px);width:100%;overflow:hidden;background:var(--forest)}
+.viewer img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.08);transition:opacity .7s var(--ease),transform 1.2s var(--ease)}
+.viewer img.on{opacity:1;transform:scale(1)}
+.viewer figcaption{position:absolute;left:0;bottom:0;z-index:2;background:var(--paper);font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;padding:8px 12px}
+.viewer figcaption::before{content:"";display:inline-block;width:8px;height:8px;background:var(--leaf);transform:skewX(-24deg);margin-right:9px}
+.viewer .count{position:absolute;right:14px;top:10px;z-index:2;font-family:var(--display);font-weight:900;font-size:64px;line-height:1;color:transparent;-webkit-text-stroke:1.5px #fff}
+figure{margin:0}
+.ask{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;border:2px solid var(--ink);padding:24px 26px;background:var(--card)}
+.ask p{font-family:var(--display);font-weight:800;font-size:clamp(26px,3vw,40px);text-transform:uppercase;line-height:1}
+.ask span{display:block;font-family:var(--body);font-weight:400;font-size:15px;color:var(--steel);text-transform:none;margin-top:8px;letter-spacing:0}
+
+/* services: stacking cards */
+.stack{display:grid;gap:26px}
+.stack article{position:sticky;top:calc(var(--top) + 18px + var(--i)*16px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--card);border:1px solid var(--rule);box-shadow:0 -14px 40px -30px rgba(16,58,36,.55);min-height:min(440px,60svh)}
+.stack article:nth-child(even){background:var(--forest);color:#fff;border-color:var(--forest)}
+.stack .txt{padding:clamp(22px,3.4vw,48px);display:flex;flex-direction:column;justify-content:space-between;gap:24px}
+.stack b{font-family:var(--display);font-weight:900;font-size:clamp(70px,9vw,130px);line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--leaf)}
+.stack article:nth-child(even) b{-webkit-text-stroke-color:var(--mint)}
+.stack h3{font-size:clamp(36px,4.4vw,62px)}
+.stack p{margin-top:14px;max-width:44ch;color:var(--steel)}
+.stack article:nth-child(even) p{color:#d6e6dc}
+.stack ul{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.stack li{font-family:var(--mono);font-size:12px;letter-spacing:.05em;border:1px solid currentColor;padding:6px 10px;opacity:.85;transition:transform .2s var(--ease),opacity .2s}
+.stack li:hover{transform:translateY(-3px);opacity:1}
+.stack .pic{overflow:hidden;min-height:260px}
+.stack .pic img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.stack article:hover .pic img{transform:scale(1.06)}
+
+.stack .doc{display:grid;place-items:center;padding:clamp(18px,3vw,40px);background:#0c2e1c}
+.file{width:min(100%,380px);background:var(--paper);color:var(--ink);box-shadow:14px 14px 0 rgba(98,212,156,.25);transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.stack article:hover .file{transform:translate(-6px,-6px) rotate(-1.2deg);box-shadow:22px 22px 0 rgba(98,212,156,.35)}
+.file header{display:flex;justify-content:space-between;padding:12px 16px;border-bottom:2px solid var(--ink);font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--steel)}
+.stack .file ul{display:block;margin:0;padding:4px 16px 10px}
+.stack .file li{border:0;border-bottom:1px dashed var(--rule);opacity:1;padding:11px 0;font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.03em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
+.stack .file li:last-child{border-bottom:0}
+.stack .file li::after{content:"✓";font-family:var(--mono);font-size:14px;color:var(--leaf)}
+.stack .file li:hover{transform:translateX(5px)}
+
+/* steps */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);position:relative;border-top:3px solid rgba(255,255,255,.18)}
+.steps::before{content:"";position:absolute;left:0;top:-3px;height:3px;width:100%;background:var(--mint);transform:scaleX(var(--p,0));transform-origin:left}
+.steps li{padding:22px 18px 6px 18px;border-right:1px solid rgba(255,255,255,.16);transition:transform .3s var(--ease)}
+.steps li:hover{transform:translateY(-5px)}
+.steps li:first-child{padding-left:0}
+.steps li:last-child{border-right:0}
+.steps b{font-family:var(--mono);font-weight:500;font-size:12.5px;color:var(--mint);letter-spacing:.08em}
+.steps h3{font-size:30px;margin:12px 0 10px}
+.steps p{font-size:15px;color:#d6e6dc}
+
+/* value */
+.value{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,5vw,72px);align-items:start}
+.value figure{position:sticky;top:calc(var(--top) + 24px);aspect-ratio:4/5;overflow:hidden;background:var(--forest)}
+.value figure img{width:100%;height:112%;object-fit:cover;will-change:transform}
+.value article{border-top:2px solid var(--ink);padding:22px 0 clamp(30px,5vw,60px);transition:border-color .3s}
+.value article:hover{border-color:var(--leaf)}
+.value h3{font-size:clamp(40px,5.4vw,76px);transition:transform .3s var(--ease),color .3s}
+.value article:hover h3{transform:translateX(8px);color:var(--leaf)}
+.value article p{margin-top:14px;color:#41464a;max-width:48ch;font-size:18px}
+.value .mono{display:block;margin-bottom:10px}
+
+/* reach */
+.reach .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,5vw,80px);align-items:center}
+.reach h2{font-size:clamp(44px,7vw,100px);font-weight:900}
+.ledger{margin:0;border-top:1px solid rgba(255,255,255,.25)}
+.ledger div{display:grid;grid-template-columns:140px 1fr;gap:18px;padding:17px 0;border-bottom:1px solid rgba(255,255,255,.25);transition:padding-left .28s var(--ease),background .28s}
+.ledger div:hover{padding-left:12px;background:rgba(255,255,255,.06)}
+.ledger dt{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mint);padding-top:3px}
+.ledger dd{margin:0}
+
+/* meeting */
+.meet .wrap{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(28px,5vw,72px);align-items:start}
+.meet{padding-top:clamp(48px,7vw,96px);margin-top:var(--top);min-height:80svh}
+.meet h1{font-size:clamp(56px,9vw,132px);font-weight:900}
+.meet .intro{max-width:42ch;margin-top:18px;color:#d6e6dc;font-size:19px}
+.mail{display:inline-block;margin-top:28px;font-family:var(--display);font-weight:800;font-size:clamp(22px,2.4vw,32px);text-decoration:none;border-bottom:2px solid var(--mint);padding-bottom:6px;overflow-wrap:anywhere;transition:color .2s}
+.mail:hover{color:var(--mint)}
+.hq{margin-top:22px;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;line-height:1.8;color:#cfe3d7;text-transform:uppercase}
+.covers{list-style:none;margin:34px 0 0;padding:0;counter-reset:c;border-top:1px solid rgba(255,255,255,.25);max-width:460px}
+.covers li{counter-increment:c;display:grid;grid-template-columns:34px 1fr;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.25);transition:transform .25s var(--ease)}
+.covers li:hover{transform:translateX(6px)}
+.covers li::before{content:counter(c,decimal-leading-zero);font-family:var(--mono);font-size:12px;color:var(--mint);padding-top:4px}
+form{background:var(--paper);color:var(--ink);padding:clamp(20px,3vw,32px);display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:4px solid var(--mint)}
+form .full{grid-column:1/-1}
+label{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--steel);margin-bottom:7px}
+input,select,textarea{width:100%;background:#fff;border:1px solid var(--rule);color:var(--ink);font:inherit;font-size:16px;padding:12px;border-radius:0;transition:border-color .2s,box-shadow .2s}
+input:hover,textarea:hover{border-color:var(--steel)}
+input:focus,textarea:focus{outline:none;border-color:var(--leaf);box-shadow:0 0 0 3px rgba(31,122,77,.18)}
+textarea{min-height:92px;resize:vertical}
+fieldset{border:0;padding:0;margin:0}
+.choice{display:flex;gap:8px;flex-wrap:wrap}
+.choice label{margin:0;cursor:pointer}
+.choice input{position:absolute;opacity:0;width:1px;height:1px}
+.choice span{display:block;border:1px solid var(--rule);background:#fff;padding:10px 14px;color:var(--ink);transition:background .2s,border-color .2s,transform .2s var(--ease)}
+.choice span:hover{transform:translateY(-2px);border-color:var(--steel)}
+.choice input:checked+span{background:var(--forest);border-color:var(--forest);color:#fff}
+.choice input:focus-visible+span{outline:2px solid var(--leaf);outline-offset:3px}
+.out{display:none}
+.out.on{display:block}
+.out p{font-size:14.5px;color:var(--steel);margin-bottom:10px}
+.out textarea{min-height:170px;font-family:var(--mono);font-size:13px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.err{color:#a3261a;font-size:14.5px;margin-bottom:10px}
+
+/* footer */
+footer{background:var(--ink);color:#c9cdca;padding:clamp(36px,5vw,60px) 0 28px}
+footer .wrap{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:32px}
+footer img{height:46px;width:auto}
+footer nav{display:grid;gap:10px;align-content:start}
+footer a{text-decoration:none;transition:color .2s,padding-left .25s var(--ease)}
+footer a:hover{color:var(--mint);padding-left:6px}
+footer .mono{color:#8f9692}
+.credits{grid-column:1/-1;border-top:1px solid #3a4044;padding-top:18px;font-size:12.5px;color:#8f9692;line-height:1.6}
+.credits a{text-decoration:underline}
+
+@media (max-width:1020px){
+  .hero .wrap,.head,.reach .wrap,.meet .wrap,.split,.value{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr 1fr}
+  .facts div:nth-child(2){border-right:0}
+  .facts div:nth-child(-n+2){border-bottom:1px solid var(--rule)}
+  .doors{grid-template-columns:1fr}
+  .door{aspect-ratio:16/10}
+  .steps{grid-template-columns:1fr 1fr}
+  .steps li{border-right:0;padding-left:0;border-bottom:1px solid rgba(255,255,255,.16);padding-bottom:18px}
+  .viewer{position:relative;top:0;aspect-ratio:16/10;order:-1}
+  .value figure{position:relative;top:0;aspect-ratio:16/11}
+  .stack article{grid-template-columns:1fr;position:relative;top:0}
+  .stack .pic{order:-1;aspect-ratio:16/9;min-height:0}
+  .top nav a:not(.btn){display:none}
+  footer .wrap{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .facts,.steps,form{grid-template-columns:1fr}
+  .facts div{border-right:0;border-bottom:1px solid var(--rule)}
+  .ledger div{grid-template-columns:1fr;gap:4px}
+  .brand img{height:34px}
+  .journey .jhead p{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .ticker div{animation:none}
+  *,*::before,*::after{transition:none!important}
+}
+</style>
+</head>
+<body>
+<div id="bar" aria-hidden="true"></div>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="Sprout Capital, home"><img src="media/logo.png" alt="Sprout Capital" width="900" height="199"></a>
+    <nav aria-label="Pages">
+      <a href="#home" data-nav="home">Home</a>
+      <a href="#materials" data-nav="materials">Materials</a>
+      <a href="#services" data-nav="services">Services</a>
+      <a class="btn solid" href="#meet" data-nav="meet">Book a meeting</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HOME ============ -->
+<div class="view" data-view="home">
+  <div class="hero">
+    <div class="media" data-parallax=".18"><video autoplay muted loop playsinline poster="media/rail.jpg" aria-hidden="true"><source src="media/rail.mp4" type="video/mp4"></video></div>
+    <div class="wrap">
+      <div>
+        <p class="mono">Minerals, ores and alloys · Johannesburg · Est. 2013</p>
+        <h1>If it comes out of the ground, <em>we trade it.</em></h1>
+        <p class="lede">Sprout Capital sources, trades and ships minerals and metals for buyers and sellers worldwide. Headquartered in Johannesburg, fully licensed, with 15 years of trading experience behind every lot.</p>
+        <div class="cta">
+          <a class="btn solid" href="#meet">Book a meeting</a>
+          <a class="btn" href="#materials">See what we trade</a>
+        </div>
+      </div>
+      <aside class="sheet" aria-label="What a first meeting covers">
+        <header><span>First meeting</span><span>Agenda</span></header>
+        <h3>What we cover</h3>
+        <ol>
+          <li>Your material, grade and monthly tonnage</li>
+          <li>Where it loads and where it needs to arrive</li>
+          <li>How we price, sample and inspect</li>
+          <li>Documents, payment terms and the first lot</li>
+        </ol>
+        <a href="#meet">Request a time</a>
+      </aside>
+    </div>
+  </div>
+
+  <div class="ticker" aria-hidden="true"><div>
+    <span>Chrome</span><span>Ferrochrome</span><span>Manganese</span><span>Ferromanganese</span><span>Silicomanganese</span><span>Ferrosilicon</span><span>Copper</span><span>Zinc</span><span>Tin</span><span>Aluminium alloys</span><span>Cobalt hydroxide</span><span>Zircon sand</span><span>PGMs</span>
+    <span>Chrome</span><span>Ferrochrome</span><span>Manganese</span><span>Ferromanganese</span><span>Silicomanganese</span><span>Ferrosilicon</span><span>Copper</span><span>Zinc</span><span>Tin</span><span>Aluminium alloys</span><span>Cobalt hydroxide</span><span>Zircon sand</span><span>PGMs</span>
+  </div></div>
+
+  <div class="facts">
+    <div><b data-count="2013">2013</b><p>The year the company was established.</p></div>
+    <div><b><span data-count="15">15</span><small>YRS</small></b><p>Of physical trading experience behind every lot.</p></div>
+    <div><b data-count="18">18</b><p>Materials on the book, and more on request.</p></div>
+    <div><b>JHB</b><p>Headquartered in Johannesburg, trading worldwide.</p></div>
+  </div>
+
+  <section class="journey" id="journey" aria-label="How a lot moves from source to ship">
+    <div class="pin">
+      <div class="jhead">
+        <h2>Pit to port, <em style="color:var(--mint)">one desk</em></h2>
+        <p>Scroll to follow a lot</p>
+      </div>
+      <div class="track" id="track">
+        <article class="stop"><img src="media/quarry.jpg" alt="Excavator working a quarry face"><div><b>01</b><h3>Source</h3><p>We buy at the mine and the plant, from producers we already know.</p></div></article>
+        <article class="stop"><img src="media/yard.jpg" alt="Loader and conveyors on a stockpile, seen from above"><div><b>02</b><h3>Sample</h3><p>Every lot is sampled on the stockpile. An assay sets the grade.</p></div></article>
+        <article class="stop"><img src="media/truck.jpg" alt="Tipper truck unloading beside an excavator"><div><b>03</b><h3>Haul</h3><p>Road haulage from site, booked and tracked by us.</p></div></article>
+        <article class="stop"><img src="media/port.jpg" alt="Container terminal with cranes and a vessel alongside"><div><b>04</b><h3>Port</h3><p>Port handling, an independent inspection and the export documents.</p></div></article>
+        <article class="stop"><img src="media/ship.jpg" alt="Bulk carrier loading cargo at a jetty"><div><b>05</b><h3>Ship</h3><p>Ocean freight to your port, with the certificate of quality on board.</p></div></article>
+      </div>
+      <div class="jline" aria-hidden="true"><i id="jfill"></i></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head" data-r>
+        <div><span class="mono">Start here</span><h2>Three ways <em>in</em></h2></div>
+        <p>Look at the materials, see how we move them, or skip straight to a conversation.</p>
+      </div>
+      <div class="doors">
+        <a class="door" href="#materials" data-r><img src="media/carts.jpg" alt="" style="object-position:82% 50%"><div><span>Page 02</span><h3>Materials</h3><p>Eighteen ores, concentrates, alloys and metals.</p></div></a>
+        <a class="door" href="#services" data-r><img src="media/loader.jpg" alt=""><div><span>Page 03</span><h3>Services</h3><p>Trading, freight, sampling and paperwork.</p></div></a>
+        <a class="door" href="#meet" data-r><video muted loop playsinline preload="metadata" poster="media/portvid.jpg" aria-hidden="true"><source src="media/portvid.mp4" type="video/mp4"></video><div><span>Page 04</span><h3>Meet us</h3><p>Video call, Johannesburg or on site.</p></div></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="band" aria-hidden="true"><div data-slide=".55">Chrome <b>Manganese</b> Copper <b>PGMs</b> Ferroalloys <b>Cobalt</b> Zinc <b>Tin</b> Zircon</div></div>
+
+  <section class="dark close">
+    <div class="wrap">
+      <div data-r><h2>Bring us <em>a lot.</em></h2><p>Tell us the material and the tonnage. We come back with a time, and with what we can supply or place.</p></div>
+      <a class="btn solid" href="#meet" data-r>Book a meeting</a>
+    </div>
+  </section>
+</div>
+
+<!-- ============ MATERIALS ============ -->
+<div class="view" data-view="materials" hidden>
+  <div class="hero page">
+    <div class="media" data-parallax=".18"><video muted loop playsinline preload="none" poster="media/conveyor.jpg" aria-hidden="true"><source src="media/conveyor.mp4" type="video/mp4"></video></div>
+    <div class="wrap"><div>
+      <p class="mono">Page 02 · Materials</p>
+      <h1>What we <em>trade</em></h1>
+      <p class="lede">Ores, concentrates, alloys and refined metals. We buy from producers and sell to smelters, refiners, mills and traders, in either direction.</p>
+    </div></div>
+  </div>
+
+  <section>
+    <div class="wrap split">
+      <div id="cat">
+        <div class="grp" data-img="0" data-r>
+          <h3>CHROME <span>03</span></h3>
+          <ul>
+            <li><b>Chrome ROM</b><i>Cr</i><small>Run-of-mine feed for wash plants</small></li>
+            <li><b>Chrome ore</b><i>Cr</i><small>Lumpy and fines</small></li>
+            <li><b>Chrome concentrate</b><i>Cr₂O₃</i><small>For ferrochrome and stainless steel</small></li>
+          </ul>
+        </div>
+        <div class="grp" data-img="1" data-r>
+          <h3>FERROALLOYS <span>05</span></h3>
+          <ul>
+            <li><b>Ferrochrome</b><i>FeCr</i><small>Stainless steel</small></li>
+            <li><b>Ferromanganese</b><i>FeMn</i><small>Carbon steel</small></li>
+            <li><b>Silicomanganese</b><i>SiMn</i><small>Steel deoxidiser</small></li>
+            <li><b>Ferrosilicon</b><i>FeSi</i><small>Steel and cast iron</small></li>
+            <li><b>Ferro fines</b><i>Fe-x</i><small>Alloy fines for blending and remelt</small></li>
+          </ul>
+        </div>
+        <div class="grp" data-img="2" data-r>
+          <h3>MANGANESE <span>02</span></h3>
+          <ul>
+            <li><b>Manganese ore</b><i>Mn</i><small>Feed for alloy smelters</small></li>
+            <li><b>Manganese</b><i>Mn</i><small>Metal for aluminium and specialty steel</small></li>
+          </ul>
+        </div>
+        <div class="grp" data-img="3" data-r>
+          <h3>BASE AND MINOR METALS <span>05</span></h3>
+          <ul>
+            <li><b>Copper ore</b><i>Cu</i><small>Oxide ore for leach plants and smelters</small></li>
+            <li><b>Copper concentrate</b><i>Cu</i><small>Smelter feed</small></li>
+            <li><b>Zinc ore</b><i>Zn</i><small>For galvanising supply chains</small></li>
+            <li><b>Tin</b><i>Sn</i><small>Solder and tinplate</small></li>
+            <li><b>Cobalt hydroxide</b><i>Co</i><small>Battery chemicals</small></li>
+          </ul>
+        </div>
+        <div class="grp" data-img="4" data-r>
+          <h3>PRECIOUS <span>01</span></h3>
+          <ul>
+            <li><b>PGM concentrate</b><i>Pt · Pd · Rh</i><small>For refining and autocatalysts</small></li>
+          </ul>
+        </div>
+        <div class="grp" data-img="5" data-r>
+          <h3>ALLOYS AND INDUSTRIAL MINERALS <span>02</span></h3>
+          <ul>
+            <li><b>Aluminium alloys</b><i>Al</i><small>Casting and extrusion</small></li>
+            <li><b>Zircon sand</b><i>Zr</i><small>Ceramics and foundries</small></li>
+          </ul>
+        </div>
+      </div>
+
+      <figure class="viewer" id="viewer">
+        <img class="on" src="media/chromitite.jpg" alt="Chromitite ore specimen from the Bushveld Complex" data-cap="Chromitite · Bushveld Complex">
+        <img src="media/ferrochrome.jpg" alt="Lump of ferrochrome alloy" data-cap="Ferrochrome lump">
+        <img src="media/rail.jpg" alt="Ore wagons and loaders at a rail siding" data-cap="Bulk ore at a rail siding">
+        <img src="media/azurite.jpg" alt="Copper ore covered in deep blue azurite" data-cap="Copper ore · azurite">
+        <img src="media/smelter.jpg" alt="Smelter complex in Mpumalanga, South Africa" data-cap="Smelting · Mpumalanga">
+        <img src="media/stockpile.jpg" alt="Tall stockpiles of dark crushed material under a blue sky" data-cap="Bulk stockpiles">
+        <span class="count" id="vcount" aria-hidden="true">01</span>
+        <figcaption id="vcap">Chromitite · Bushveld Complex</figcaption>
+      </figure>
+    </div>
+
+    <div class="wrap" style="margin-top:20px">
+      <div class="ask" data-r>
+        <p>Not on the list?<span>Tell us the material. If it is mined or smelted, we can usually source it or place it.</span></p>
+        <a class="btn solid" href="#meet">Ask in a meeting</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="band" aria-hidden="true"><div data-slide=".55">Bought on assay <b>Sold on spec</b> Bought on assay <b>Sold on spec</b></div></div>
+
+  <section class="dark close">
+    <div class="wrap">
+      <div data-r><h2>Need a <em>quote?</em></h2><p>Send the material, grade and tonnage. We reply with price basis and delivery.</p></div>
+      <a class="btn solid" href="#meet" data-r>Book a meeting</a>
+    </div>
+  </section>
+</div>
+
+<!-- ============ SERVICES ============ -->
+<div class="view" data-view="services" hidden>
+  <div class="hero page">
+    <div class="media" data-parallax=".18"><video muted loop playsinline preload="none" poster="media/crusher.jpg" aria-hidden="true"><source src="media/crusher.mp4" type="video/mp4"></video></div>
+    <div class="wrap"><div>
+      <p class="mono">Page 03 · Services and experience</p>
+      <h1>More than a <em>price</em></h1>
+      <p class="lede">A trade fails on logistics and paperwork far more often than on price. We handle both, so the material arrives as quoted.</p>
+    </div></div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="stack">
+        <article style="--i:0">
+          <div class="txt"><b>A</b><div><h3>Sourcing and trading</h3><p>We buy and sell on our own book, and we match buyers with sellers across a network built over 15 years.</p><ul><li>Spot lots</li><li>Regular offtake</li><li>Buy side and sell side</li></ul></div></div>
+          <div class="pic"><img src="media/sorter.jpg" alt="Worker in a hard hat hand-sorting ore into a bag"></div>
+        </article>
+        <article style="--i:1">
+          <div class="txt"><b>B</b><div><h3>Logistics and freight</h3><p>Road haulage from mine or plant, port handling and ocean freight, arranged by people who do it every week.</p><ul><li>Road haulage</li><li>Port handling</li><li>Ocean freight</li></ul></div></div>
+          <div class="pic"><img src="media/fleet.jpg" alt="Six tipper trucks parked in a row beside a stockpile, seen from above"></div>
+        </article>
+        <article style="--i:2">
+          <div class="txt"><b>C</b><div><h3>Sampling and inspection</h3><p>Our teams sample every lot. An independent inspector certifies weight and quality at loading.</p><ul><li>Stockpile sampling</li><li>Assay</li><li>Certificate of quality</li></ul></div></div>
+          <div class="pic"><img src="media/lab.jpg" alt="Rows of labelled sample bottles in a laboratory"></div>
+        </article>
+        <article style="--i:3">
+          <div class="txt"><b>D</b><div><h3>Licensing and documents</h3><p>We are fully licensed for what we trade, and we prepare the export and shipping documents.</p><ul><li>Export permits</li><li>Shipping documents</li><li>Payment terms</li></ul></div></div>
+          <div class="pic doc" aria-label="Documents in a lot file"><div class="file"><header><span>Lot file</span><span>Documents</span></header><ul><li>Export permit</li><li>Weighbridge certificate</li><li>Certificate of quality</li><li>Certificate of origin</li><li>Bill of lading</li><li>Commercial invoice</li></ul></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark" id="stepsec">
+    <div class="wrap">
+      <div class="head" data-r>
+        <div><span class="mono">How we trade</span><h2>Five steps, <em>one lot</em></h2></div>
+        <p>The same sequence for a truckload or a vessel parcel. You see the numbers before you pay for the material.</p>
+      </div>
+      <ol class="steps" id="steps">
+        <li><b>01</b><h3>Meet</h3><p>We agree the material, the spec, the volume and the delivery point.</p></li>
+        <li><b>02</b><h3>Sample</h3><p>Our teams sample the lot. An assay sets the grade.</p></li>
+        <li><b>03</b><h3>Price</h3><p>We quote against the assay, in writing, for that lot.</p></li>
+        <li><b>04</b><h3>Load</h3><p>An independent inspector checks weight and quality at loading.</p></li>
+        <li><b>05</b><h3>Settle</h3><p>You receive the certificate of quality with the shipping documents.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head" data-r>
+        <div><span class="mono">Value</span><h2>Who gains from a <em>good trade</em></h2></div>
+        <p>A lot that is sampled properly, paid fairly and delivered on spec is good for everyone who touches it.</p>
+      </div>
+      <div class="value">
+        <figure data-z><img src="media/crew.jpg" alt="Three mine workers on a loader, one with arms raised" data-parallax="-.06"></figure>
+        <div>
+          <article data-r><span class="mono">At the source</span><h3>Workers</h3><p>Sampling, loading and haulage are skilled jobs. We use trained local teams and expect safe sites and fair, on-time pay wherever our material is handled.</p></article>
+          <article data-r><span class="mono">Around the mine</span><h3>Communities</h3><p>We buy from small and mid-sized producers as well as large ones. That keeps mineral income in the towns where the material is mined.</p></article>
+          <article data-r><span class="mono">At the other end</span><h3>End users</h3><p>Chrome becomes stainless steel. PGMs clean vehicle exhaust. Copper and cobalt carry and store electricity. A consistent grade from us means fewer surprises in your furnace.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark reach">
+    <div class="wrap">
+      <div data-r><span class="mono eyebrow">Experience</span><h2>Johannesburg desk. <em>Worldwide book.</em></h2></div>
+      <dl class="ledger" data-r>
+        <div><dt>Headquarters</dt><dd>Johannesburg, South Africa.</dd></div>
+        <div><dt>Established</dt><dd>2013.</dd></div>
+        <div><dt>Experience</dt><dd>15 years of physical mineral trading.</dd></div>
+        <div><dt>Counterparties</dt><dd>Buyers and sellers worldwide.</dd></div>
+        <div><dt>Licensing</dt><dd>Fully licensed for the materials we trade.</dd></div>
+        <div><dt>Delivery</dt><dd>Road, port and ocean freight, arranged by us.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="close" style="background:var(--card)">
+    <div class="wrap">
+      <div data-r><h2>See it <em>work.</em></h2><p style="color:var(--steel)">One conversation is enough to know whether we can move your material.</p></div>
+      <a class="btn solid" href="#meet" data-r>Book a meeting</a>
+    </div>
+  </section>
+</div>
+
+<!-- ============ MEET ============ -->
+<div class="view" data-view="meet" hidden>
+  <section class="dark meet">
+    <div class="wrap">
+      <div>
+        <p class="mono">Page 04 · Book a meeting</p>
+        <h1 style="margin-top:14px">Let's <em>talk.</em></h1>
+        <p class="intro">Tell us what you buy or sell. We come back with a time, and with what we can supply or place.</p>
+        <a class="mail" href="mailto:huzaifah@sproutcapital.co.za">huzaifah@sproutcapital.co.za</a>
+        <p class="hq">Sprout Capital<br>Johannesburg, South Africa</p>
+        <ol class="covers">
+          <li>Your material, grade and monthly tonnage</li>
+          <li>Where it loads and where it needs to arrive</li>
+          <li>How we price, sample and inspect</li>
+          <li>Documents, payment terms and the first lot</li>
+        </ol>
+      </div>
+
+      <form id="mform" novalidate>
+        <div><label for="f-name">Your name</label><input id="f-name" autocomplete="name" required></div>
+        <div><label for="f-co">Company</label><input id="f-co" autocomplete="organization" required></div>
+        <fieldset class="full">
+          <label>I want to</label>
+          <div class="choice">
+            <label><input type="radio" name="side" value="Buy" checked><span>Buy</span></label>
+            <label><input type="radio" name="side" value="Sell"><span>Sell</span></label>
+            <label><input type="radio" name="side" value="Buy and sell"><span>Both</span></label>
+          </div>
+        </fieldset>
+        <div><label for="f-mat">Material</label><input id="f-mat" placeholder="e.g. Chrome concentrate" required></div>
+        <div><label for="f-ton">Tonnes per month</label><input id="f-ton" inputmode="numeric" placeholder="e.g. 5,000"></div>
+        <fieldset class="full">
+          <label>Meet by</label>
+          <div class="choice">
+            <label><input type="radio" name="how" value="Video call" checked><span>Video call</span></label>
+            <label><input type="radio" name="how" value="In person in Johannesburg"><span>In Johannesburg</span></label>
+            <label><input type="radio" name="how" value="Site visit"><span>Site visit</span></label>
+          </div>
+        </fieldset>
+        <div><label for="f-date">Preferred date</label><input id="f-date" type="date"></div>
+        <div><label for="f-tz">Your city or time zone</label><input id="f-tz" placeholder="e.g. Rotterdam"></div>
+        <div class="full"><label for="f-note">Anything else</label><textarea id="f-note" placeholder="Spec, delivery point, timing"></textarea></div>
+        <div class="full">
+          <p class="err" id="f-err" role="alert" hidden>Add your name, company and material so we know what to prepare.</p>
+          <button class="btn solid" type="submit">Prepare my request</button>
+        </div>
+        <div class="full out" id="out">
+          <p>Your request is ready. Open it in your email app, or copy it and send it to huzaifah@sproutcapital.co.za.</p>
+          <textarea id="f-out" readonly aria-label="Your meeting request"></textarea>
+          <div class="row">
+            <a class="btn solid" id="f-mailto" href="mailto:huzaifah@sproutcapital.co.za">Open in email</a>
+            <button class="btn" type="button" id="f-copy">Copy request</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <img src="media/logo-light.png" alt="Sprout Capital" width="900" height="199">
+      <p class="mono" style="margin-top:16px">Minerals, ores and alloys<br>Johannesburg, South Africa · Est. 2013</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="#home">Home</a>
+      <a href="#materials">Materials</a>
+      <a href="#services">Services and experience</a>
+      <a href="#meet">Book a meeting</a>
+    </nav>
+    <div>
+      <p class="mono">Contact</p>
+      <p style="margin-top:10px;overflow-wrap:anywhere">huzaifah@sproutcapital.co.za</p>
+    </div>
+    <p class="credits">© 2026 Sprout Capital. Photo credits: ferrochrome lump by FocalPoint, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>; smelter near Lydenburg by JMK, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>; chromitite specimen by James St. John, <a href="https://creativecommons.org/licenses/by/2.0">CC BY 2.0</a>; all via Wikimedia Commons, cropped. Other photography and footage from Pexels and Sprout Capital.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var all=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var views=all('.view'),names=views.map(function(v){return v.dataset.view}),current=null,io=null;
+  var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
+
+  /* ---------- router: four pages on the hash ---------- */
+  function route(){
+    var n=(location.hash||'').replace('#','');
+    if(names.indexOf(n)<0)n='home';
+    var changed=n!==current;current=n;
+    views.forEach(function(v){
+      var on=v.dataset.view===n;v.hidden=!on;
+      all('video',v).forEach(function(x){if(on){var p=x.play();if(p&&p.catch)p.catch(function(){})}else x.pause()});
+    });
+    all('[data-nav]').forEach(function(a){if(a.dataset.nav===n)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+    if(changed){window.scrollTo(0,0);setup()}
+  }
+  window.addEventListener('hashchange',route);
+
+  /* ---------- reveal + count-up ---------- */
+  function countUp(el){
+    var end=+el.dataset.count,start=end>1000?end-40:0,t0=null,d=1100;
+    function step(t){if(!t0)t0=t;var k=clamp((t-t0)/d,0,1);k=1-Math.pow(1-k,3);el.textContent=Math.round(start+(end-start)*k);if(k<1)requestAnimationFrame(step)}
+    requestAnimationFrame(step);
+  }
+  function setup(){
+    if(io)io.disconnect();
+    var v=views[names.indexOf(current)];
+    measure();
+    if(still||!('IntersectionObserver' in window))return;
+    io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting)return;
+      var el=e.target;el.classList.remove('pre');
+      if(el.dataset.count&&!el.dataset.done){el.dataset.done=1;countUp(el)}
+      io.unobserve(el);
+    })},{rootMargin:'0px 0px -12% 0px',threshold:.08});
+    var vh=window.innerHeight;
+    all('[data-r],[data-z]',v).forEach(function(el,i){
+      if(el.getBoundingClientRect().top>vh*.9){el.classList.add('pre');el.style.transitionDelay=(i%3)*70+'ms'}
+      io.observe(el);
+    });
+    all('[data-count]',v).forEach(function(el){if(!el.dataset.done)io.observe(el)});
+  }
+
+  /* ---------- scroll-driven pieces ---------- */
+  var journey=$('journey'),track=$('track'),jfill=$('jfill'),steps=$('steps'),viewer=$('viewer'),travel=0;
+  function measure(){
+    var flat=still||window.innerWidth<900;
+    journey.classList.toggle('flat',flat);
+    if(flat){journey.style.height='';track.style.transform='';travel=0}
+    else{travel=Math.max(0,track.scrollWidth-window.innerWidth);journey.style.height=(journey.querySelector('.pin').offsetHeight+travel)+'px'}
+    onScroll();
+  }
+  var ticking=false;
+  function onScroll(){
+    var y=window.scrollY,vh=window.innerHeight,doc=document.documentElement.scrollHeight-vh;
+    $('bar').style.transform='scaleX('+(doc>0?clamp(y/doc,0,1):0)+')';
+    $('top').classList.toggle('stuck',y>8);
+    if(still)return;
+    all('[data-parallax]').forEach(function(el){
+      if(el.offsetParent===null)return;
+      var r=el.parentNode.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;
+      el.style.transform='translate3d(0,'+(-(r.top-72)*(+el.dataset.parallax)).toFixed(1)+'px,0)';
+    });
+    all('[data-slide]').forEach(function(el){
+      if(el.offsetParent===null)return;
+      var r=el.parentNode.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;
+      el.style.transform='translate3d('+(-(vh-r.top)*(+el.dataset.slide)).toFixed(1)+'px,0,0)';
+    });
+    if(current==='home'&&travel>0){
+      var top=journey.getBoundingClientRect().top-72,p=clamp(-top/travel,0,1);
+      track.style.transform='translate3d('+(-p*travel).toFixed(1)+'px,0,0)';
+      jfill.style.transform='scaleX('+p+')';
+    }
+    if(current==='services'){
+      var s=steps.getBoundingClientRect();
+      steps.style.setProperty('--p',clamp((vh*.85-s.top)/(vh*.55),0,1).toFixed(3));
+    }
+    if(current==='materials'){
+      var best=0,bd=1e9;
+      all('#cat .grp').forEach(function(g){var r=g.getBoundingClientRect(),d=Math.abs((r.top+r.bottom)/2-vh*.5);if(d<bd){bd=d;best=+g.dataset.img}});
+      if(viewer.dataset.on!=best){
+        viewer.dataset.on=best;
+        all('img',viewer).forEach(function(im,i){im.classList.toggle('on',i===best)});
+        $('vcap').textContent=all('img',viewer)[best].dataset.cap;
+        $('vcount').textContent='0'+(best+1);
+      }
+    }
+  }
+  window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(function(){onScroll();ticking=false})}},{passive:true});
+  window.addEventListener('resize',measure);
+  window.addEventListener('load',measure);
+
+  /* ---------- meeting form ---------- */
+  var form=$('mform'),TO='huzaifah@sproutcapital.co.za';
+  function val(id){return $(id).value.trim()}
+  function pick(n){var e=form.querySelector('input[name="'+n+'"]:checked');return e?e.value:''}
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=val('f-name'),co=val('f-co'),mat=val('f-mat');
+    if(!name||!co||!mat){$('f-err').hidden=false;return}
+    $('f-err').hidden=true;
+    var lines=['Hello Sprout Capital,','','I would like to book a meeting.','','Name: '+name,'Company: '+co,'Interest: '+pick('side'),'Material: '+mat];
+    if(val('f-ton'))lines.push('Tonnes per month: '+val('f-ton'));
+    lines.push('Meeting: '+pick('how'));
+    if(val('f-date'))lines.push('Preferred date: '+val('f-date'));
+    if(val('f-tz'))lines.push('City or time zone: '+val('f-tz'));
+    if(val('f-note'))lines.push('','Notes: '+val('f-note'));
+    var body=lines.join('\n'),subject='Meeting request: '+mat+' ('+co+')';
+    $('f-out').value='To: '+TO+'\nSubject: '+subject+'\n\n'+body;
+    $('f-mailto').href='mailto:'+TO+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+    $('out').classList.add('on');
+  });
+  var c=$('f-copy');
+  c.addEventListener('click',function(){
+    var done=function(){c.textContent='Copied';setTimeout(function(){c.textContent='Copy request'},1800)};
+    var fail=function(){$('f-out').focus();$('f-out').select();c.textContent='Selected. Press copy.'};
+    try{navigator.clipboard.writeText($('f-out').value).then(done,fail)}catch(err){fail()}
+  });
+
+  route();
+})();
+</script>
+</body>
+</html>
