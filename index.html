@@ -306,6 +306,8 @@ fieldset{border:0;padding:0;margin:0}
 .out textarea{min-height:170px;font-family:var(--mono);font-size:13px}
 .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .err{color:#a3261a;font-size:14.5px;margin-bottom:10px}
+.ok{margin-top:14px;padding:14px 16px;background:var(--forest);color:#fff;font-weight:500}
+.btn[disabled]{opacity:.6;cursor:wait}
 
 /* footer */
 footer{background:var(--ink);color:#c9cdca;padding:clamp(36px,5vw,60px) 0 28px}
@@ -650,6 +652,9 @@ footer .mono{color:#8f9692}
       <form id="mform" novalidate>
         <div><label for="f-name">Your name</label><input id="f-name" autocomplete="name" required></div>
         <div><label for="f-co">Company</label><input id="f-co" autocomplete="organization" required></div>
+        <div><label for="f-email">Your email</label><input id="f-email" type="email" autocomplete="email" required></div>
+        <div><label for="f-phone">Phone or WhatsApp (optional)</label><input id="f-phone" type="tel" autocomplete="tel"></div>
+        <input type="checkbox" id="f-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
         <fieldset class="full">
           <label>I want to</label>
           <div class="choice">
@@ -672,11 +677,12 @@ footer .mono{color:#8f9692}
         <div><label for="f-tz">Your city or time zone</label><input id="f-tz" placeholder="e.g. Rotterdam"></div>
         <div class="full"><label for="f-note">Anything else</label><textarea id="f-note" placeholder="Spec, delivery point, timing"></textarea></div>
         <div class="full">
-          <p class="err" id="f-err" role="alert" hidden>Add your name, company and material so we know what to prepare.</p>
-          <button class="btn solid" type="submit">Prepare my request</button>
+          <p class="err" id="f-err" role="alert" hidden>Add your name, company, a valid email and the material so we know what to prepare.</p>
+          <button class="btn solid" type="submit" id="f-send">Send request</button>
+          <p class="ok" id="f-ok" role="status" hidden>Request sent. We will reply to your email with a time.</p>
         </div>
         <div class="full out" id="out">
-          <p>Your request is ready. Open it in your email app, or copy it and send it to huzaifah@sproutcapital.co.za.</p>
+          <p>We could not send your request automatically. Open it in your email app, or copy it and send it to huzaifah@sproutcapital.co.za.</p>
           <textarea id="f-out" readonly aria-label="Your meeting request"></textarea>
           <div class="row">
             <a class="btn solid" id="f-mailto" href="mailto:huzaifah@sproutcapital.co.za">Open in email</a>
@@ -822,10 +828,12 @@ footer .mono{color:#8f9692}
   function pick(n){var e=form.querySelector('input[name="'+n+'"]:checked');return e?e.value:''}
   form.addEventListener('submit',function(e){
     e.preventDefault();
-    var name=val('f-name'),co=val('f-co'),mat=val('f-mat');
-    if(!name||!co||!mat){$('f-err').hidden=false;return}
-    $('f-err').hidden=true;
-    var lines=['Hello Sprout Capital,','','I would like to book a meeting.','','Name: '+name,'Company: '+co,'Interest: '+pick('side'),'Material: '+mat];
+    var name=val('f-name'),co=val('f-co'),mat=val('f-mat'),email=val('f-email');
+    if(!name||!co||!mat||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){$('f-err').hidden=false;return}
+    $('f-err').hidden=true;$('f-ok').hidden=true;$('out').classList.remove('on');
+    var lines=['Hello Sprout Capital,','','I would like to book a meeting.','','Name: '+name,'Company: '+co,'Email: '+email];
+    if(val('f-phone'))lines.push('Phone: '+val('f-phone'));
+    lines.push('Interest: '+pick('side'),'Material: '+mat);
     if(val('f-ton'))lines.push('Tonnes per month: '+val('f-ton'));
     lines.push('Meeting: '+pick('how'));
     if(val('f-date'))lines.push('Preferred date: '+val('f-date'));
@@ -834,7 +842,16 @@ footer .mono{color:#8f9692}
     var body=lines.join('\n'),subject='Meeting request: '+mat+' ('+co+')';
     $('f-out').value='To: '+TO+'\nSubject: '+subject+'\n\n'+body;
     $('f-mailto').href='mailto:'+TO+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-    $('out').classList.add('on');
+    var btn=$('f-send'),fallback=function(){$('out').classList.add('on');btn.disabled=false;btn.textContent='Send request'};
+    btn.disabled=true;btn.textContent='Sending';
+    try{
+      fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify({access_key:'a0a3a0a7-15e9-4b02-b823-dd9a8495151f',subject:subject,from_name:'Sprout Capital website',name:name,email:email,replyto:email,message:body,botcheck:$('f-hp').checked})})
+      .then(function(r){return r.json()}).then(function(d){
+        if(!d||!d.success){fallback();return}
+        form.reset();btn.disabled=false;btn.textContent='Send request';$('f-ok').hidden=false;
+      }).catch(fallback);
+    }catch(err){fallback()}
   });
   var c=$('f-copy');
   c.addEventListener('click',function(){
