@@ -211,6 +211,10 @@ figure{margin:0}
 .ask p{font-family:var(--display);font-weight:800;font-size:clamp(26px,3vw,40px);text-transform:uppercase;line-height:1}
 .ask span{display:block;font-family:var(--body);font-weight:400;font-size:15px;color:var(--steel);text-transform:none;margin-top:8px;letter-spacing:0}
 
+.gimg{display:none;margin:0 0 16px;aspect-ratio:16/10;overflow:hidden;background:var(--forest);position:relative}
+.gimg img{width:100%;height:100%;object-fit:cover}
+.gimg figcaption{position:absolute;left:0;bottom:0;background:var(--paper);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px}
+
 /* services: stacking cards */
 .stack{display:grid;gap:26px}
 .stack article{position:sticky;top:calc(var(--top) + 18px + var(--i)*16px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--card);border:1px solid var(--rule);box-shadow:0 -14px 40px -30px rgba(16,58,36,.55);min-height:min(440px,60svh)}
@@ -224,8 +228,8 @@ figure{margin:0}
 .stack ul{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .stack li{font-family:var(--mono);font-size:12px;letter-spacing:.05em;border:1px solid currentColor;padding:6px 10px;opacity:.85;transition:transform .2s var(--ease),opacity .2s}
 .stack li:hover{transform:translateY(-3px);opacity:1}
-.stack .pic{overflow:hidden;min-height:260px}
-.stack .pic img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.stack .pic{overflow:hidden;min-height:260px;position:relative}
+.stack .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
 .stack article:hover .pic img{transform:scale(1.06)}
 
 .stack .doc{display:grid;place-items:center;padding:clamp(18px,3vw,40px);background:#0c2e1c}
@@ -323,7 +327,8 @@ footer .mono{color:#8f9692}
   .door{aspect-ratio:16/10}
   .steps{grid-template-columns:1fr 1fr}
   .steps li{border-right:0;padding-left:0;border-bottom:1px solid rgba(255,255,255,.16);padding-bottom:18px}
-  .viewer{position:relative;top:0;aspect-ratio:16/10;order:-1}
+  .viewer{display:none}
+  .gimg{display:block}
   .value figure{position:relative;top:0;aspect-ratio:16/11}
   .stack article{grid-template-columns:1fr;position:relative;top:0}
   .stack .pic{order:-1;aspect-ratio:16/9;min-height:0}
@@ -508,9 +513,9 @@ footer .mono{color:#8f9692}
       <figure class="viewer" id="viewer">
         <img class="on" src="media/chromitite.jpg" alt="Chromitite ore specimen from the Bushveld Complex" data-cap="Chromitite · Bushveld Complex">
         <img src="media/ferrochrome.jpg" alt="Lump of ferrochrome alloy" data-cap="Ferrochrome lump">
-        <img src="media/rail.jpg" alt="Ore wagons and loaders at a rail siding" data-cap="Bulk ore at a rail siding">
+        <img src="media/ferromanganese.jpg" alt="Lumps of ferromanganese alloy" data-cap="Ferromanganese lumps">
         <img src="media/azurite.jpg" alt="Copper ore covered in deep blue azurite" data-cap="Copper ore · azurite">
-        <img src="media/smelter.jpg" alt="Smelter complex in Mpumalanga, South Africa" data-cap="Smelting · Mpumalanga">
+        <img src="media/ferrosilicon.jpg" alt="Bulk bag of granular ferrosilicon" data-cap="Ferrosilicon in a bulk bag">
         <img src="media/stockpile.jpg" alt="Tall stockpiles of dark crushed material under a blue sky" data-cap="Bulk stockpiles">
         <span class="count" id="vcount" aria-hidden="true">01</span>
         <figcaption id="vcap">Chromitite · Bushveld Complex</figcaption>
@@ -701,7 +706,7 @@ footer .mono{color:#8f9692}
       <p class="mono">Contact</p>
       <p style="margin-top:10px;overflow-wrap:anywhere">huzaifah@sproutcapital.co.za</p>
     </div>
-    <p class="credits">© 2026 Sprout Capital. Photo credits: ferrochrome lump by FocalPoint, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>; smelter near Lydenburg by JMK, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>; chromitite specimen by James St. John, <a href="https://creativecommons.org/licenses/by/2.0">CC BY 2.0</a>; all via Wikimedia Commons, cropped. Other photography and footage from Pexels and Sprout Capital.</p>
+    <p class="credits">© 2026 Sprout Capital. Photo credits: ferrochrome lump by FocalPoint, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>; chromitite specimen by James St. John, <a href="https://creativecommons.org/licenses/by/2.0">CC BY 2.0</a>; all via Wikimedia Commons, cropped. Other photography and footage from Pexels and Sprout Capital.</p>
   </div>
 </footer>
 
@@ -800,6 +805,16 @@ footer .mono{color:#8f9692}
   window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(function(){onScroll();ticking=false})}},{passive:true});
   window.addEventListener('resize',measure);
   window.addEventListener('load',measure);
+
+  /* phone: copy each group's photo into the group */
+  var vimgs=all('img',viewer);
+  all('#cat .grp').forEach(function(g){
+    var src=vimgs[+g.dataset.img];if(!src)return;
+    var f=document.createElement('figure');f.className='gimg';
+    var im=src.cloneNode();im.className='';im.loading='lazy';
+    var cap=document.createElement('figcaption');cap.textContent=src.dataset.cap;
+    f.appendChild(im);f.appendChild(cap);g.insertBefore(f,g.firstChild);
+  });
 
   /* ---------- meeting form ---------- */
   var form=$('mform'),TO='huzaifah@sproutcapital.co.za';
